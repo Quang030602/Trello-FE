@@ -3,17 +3,13 @@ import ListColumns from './ListColumns/ListColumns'
 
 import {
   DndContext,
-  // PointerSensor,
-  // MouseSensor,
-  // TouchSensor,
+
   useSensor,
   useSensors,
   DragOverlay,
   defaultDropAnimationSideEffects,
   closestCorners,
-  // closestCenter,
   pointerWithin,
-  // rectIntersection,
   getFirstCollision
 } from '@dnd-kit/core'
 import { MouseSensor, TouchSensor } from '~/customLibraries/DndKitSensors'
@@ -141,9 +137,7 @@ function BoardContent({
       if (triggerFrom === 'handleDragEnd') {
         /**
          * Gọi lên props function moveCardToDifferentColumn nằm ở component cha cao nhất (boards/_id.jsx)
-         * Lưu ý: Về sau ở học phần MERN Stack Advance nâng cao học trực tiếp mình sẽ với mình thì chúng ta sẽ đưa dữ liệu Board ra ngoài Redux Global Store,
-         * và lúc này chúng ta có thể gọi luôn API ở đây là xong thay vì phải lần lượt gọi ngược lên những component cha phía bên trên. (Đối với component con nằm càng sâu thì càng khổ :D)
-         * - Với việc sử dụng Redux như vậy thì code sẽ Clean chuẩn chỉnh hơn rất nhiều.
+
          */
         // Phải dùng tới activeDragItemData.columnId hoặc tốt nhất là oldColumnWhenDraggingCard._id (set vào state từ bước handleDragStart) chứ không phải activeData trong scope handleDragEnd này vì sau khi đi qua onDragOver và tới đây là state của card đã bị cập nhật một lần rồi.
         moveCardToDifferentColumn(
@@ -276,9 +270,7 @@ function BoardContent({
 
         /**
          * Gọi lên props function moveCardInTheSameColumn nằm ở component cha cao nhất (boards/_id.jsx)
-         * Lưu ý: Về sau ở học phần MERN Stack Advance nâng cao học trực tiếp mình sẽ với mình thì chúng ta sẽ đưa dữ liệu Board ra ngoài Redux Global Store,
-         * và lúc này chúng ta có thể gọi luôn API ở đây là xong thay vì phải lần lượt gọi ngược lên những component cha phía bên trên. (Đối với component con nằm càng sâu thì càng khổ :D)
-         * - Với việc sử dụng Redux như vậy thì code sẽ Clean chuẩn chỉnh hơn rất nhiều.
+
          */
         moveCardInTheSameColumn(dndOrderedCards, dndOrderedCardIds, oldColumnWhenDraggingCard._id)
       }
@@ -302,9 +294,7 @@ function BoardContent({
         setOrderedColumns(dndOrderedColumns)
         /**
          * Gọi lên props function moveColumns nằm ở component cha cao nhất (boards/_id.jsx)
-         * Lưu ý: Về sau ở học phần MERN Stack Advance nâng cao học trực tiếp mình sẽ với mình thì chúng ta sẽ đưa dữ liệu Board ra ngoài Redux Global Store,
-         * và lúc này chúng ta có thể gọi luôn API ở đây là xong thay vì phải lần lượt gọi ngược lên những component cha phía bên trên. (Đối với component con nằm càng sâu thì càng khổ :D)
-         * - Với việc sử dụng Redux như vậy thì code sẽ Clean chuẩn chỉnh hơn rất nhiều.
+
         */
         moveColumns(dndOrderedColumns)
       }
@@ -335,7 +325,7 @@ function BoardContent({
     // Tìm các điểm giao nhau, va chạm, trả về một mảng các va chạm - intersections với con trỏ
     const pointerIntersections = pointerWithin(args)
 
-    // Video 37.1: Nếu pointerIntersections là mảng rỗng, return luôn không làm gì hết.
+    // Nếu pointerIntersections là mảng rỗng, return luôn không làm gì hết.
     // Fix triệt để cái bug flickering của thư viện Dnd-kit trong trường hợp sau:
     //  - Kéo một cái card có image cover lớn và kéo lên phía trên cùng ra khỏi khu vực kéo thả
     if (!pointerIntersections?.length) return
@@ -375,9 +365,10 @@ function BoardContent({
     <DndContext
       // Cảm biến (đã giải thích kỹ ở video số 30)
       sensors={sensors}
-      // Thuật toán phát hiện va chạm (nếu không có nó thì card với cover lớn sẽ không kéo qua Column được vì lúc này nó đang bị conflict giữa card và column), chúng ta sẽ dùng closestCorners thay vì closestCenter
+      // Thuật toán phát hiện va chạm (nếu không có nó thì card với cover lớn sẽ không kéo qua Column được vì lúc này nó đang bị conflict giữa card và column), 
+      // chúng ta sẽ dùng closestCorners thay vì closestCenter
       // https://docs.dndkit.com/api-documentation/context-provider/collision-detection-algorithms
-      // Update video 37: nếu chỉ dùng closestCorners sẽ có bug flickering + sai lệch dữ liệu (vui lòng xem video 37 sẽ rõ)
+      // nếu chỉ dùng closestCorners sẽ có bug flickering + sai lệch dữ liệu
       // collisionDetection={closestCorners}
 
       // Tự custom nâng cao thuật toán phát hiện va chạm (video fix bug số 37)

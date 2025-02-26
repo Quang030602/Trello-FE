@@ -1,41 +1,39 @@
-import { useEffect, useState } from 'react'
-import Container from '@mui/material/Container'
-import AppBar from '~/components/AppBar/AppBar'
-import BoardBar from './BoardBar/BoardBar'
-import BoardContent from './BoardContent/BoardContent'
-import { mapOrder } from '~/utils/sorts'
-
-// import { mockData } from '~/apis/mock-data'
-import {
-  fetchBoardDetailsAPI,
-  createNewColumnAPI,
-  createNewCardAPI,
-  updateBoardDetailsAPI,
-  updateColumnDetailsAPI,
-  moveCardToDifferentColumnAPI,
-  deleteColumnDetailsAPI
-} from '~/apis'
-import { generatePlaceholderCard } from '~/utils/formatters'
-import { isEmpty } from 'lodash'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
+import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import { isEmpty } from 'lodash'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import {
+  createNewCardAPI,
+  createNewColumnAPI,
+  deleteColumnDetailsAPI,
+  fetchBoardDetailsAPI,
+  moveCardToDifferentColumnAPI,
+  updateBoardDetailsAPI,
+  updateColumnDetailsAPI
+} from '~/apis'
+import AppBar from '~/components/AppBar/AppBar'
+import { generatePlaceholderCard } from '~/utils/formatters'
+import { mapOrder } from '~/utils/sorts'
+import BoardBar from './BoardBar/BoardBar'
+import BoardContent from './BoardContent/BoardContent'
 
 function Board() {
   const [board, setBoard] = useState(null)
 
   useEffect(() => {
     // Tạm thời fix cứng boardId, flow chuẩn chỉnh về sau khi học nâng cao trực tiếp với mình là chúng ta sẽ sử dụng react-router-dom để lấy chuẩn boardId từ URL. Chi tiết hơn xem tại playlist nâng cao này: https://youtube.com/playlist?list=PLP6tw4Zpj-RJbPQfTZ0eCAXH_mHQiuf2G
-    const boardId = '6534e1b8a235025a66b644a5'
+    const boardId = '67b54524fb02d348daeef05d'
     // Call API
     fetchBoardDetailsAPI(boardId).then(board => {
 
-      // Sắp xếp thứ tự các column luôn ở đây trước khi đưa dữ liệu xuống bên dưới các component con (video 71 đã giải thích lý do ở phần Fix bug quan trọng)
+      // Sắp xếp thứ tự các column luôn ở đây trước khi đưa dữ liệu xuống bên dưới các component con
       board.columns = mapOrder(board.columns, board.columnOrderIds, '_id')
 
       board.columns.forEach(column => {
-        // Khi f5 trang web thì cần xử lý vấn đề kéo thả vào một column rỗng (Nhớ lại video 37.2, code hiện tại là video 69)
+        // Khi f5 trang web thì cần xử lý vấn đề kéo thả vào một column rỗng
         if (isEmpty(column.cards)) {
           column.cards = [generatePlaceholderCard(column)]
           column.cardOrderIds = [generatePlaceholderCard(column)._id]
@@ -62,7 +60,8 @@ function Board() {
 
     // Cập nhật state board
     // Phía Front-end chúng ta phải tự làm đúng lại state data board (thay vì phải gọi lại api fetchBoardDetailsAPI)
-    // Lưu ý: cách làm này phụ thuộc vào tùy lựa chọn và đặc thù dự án, có nơi thì BE sẽ hỗ trợ trả về luôn toàn bộ Board dù đây có là api tạo Column hay Card đi chăng nữa. => Lúc này FE sẽ nhàn hơn.
+    // Lưu ý: cách làm này phụ thuộc vào tùy lựa chọn và đặc thù dự án, có nơi thì BE sẽ hỗ trợ trả về luôn toàn bộ Board dù đây có là api tạo Column hay Card đi chăng nữa. 
+    // => Lúc này FE sẽ nhàn hơn.
     const newBoard = { ...board }
     newBoard.columns.push(createdColumn)
     newBoard.columnOrderIds.push(createdColumn._id)
