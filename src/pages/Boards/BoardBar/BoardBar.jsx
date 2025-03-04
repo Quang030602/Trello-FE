@@ -102,67 +102,48 @@ function BoardBar({ board }) {
             }
           }}
         >
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
+          <Tooltip title="AiMier">
+            <Avatar alt="AiMier"
               src="https://trungquandev.com/wp-content/uploads/2023/05/main-avatar-circle-min-trungquandev-codetq.jpeg"
             />
           </Tooltip>
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
+          <Tooltip title="AiMier">
+            <Avatar alt="AiMier"
               src="https://trungquandev.com/wp-content/uploads/2021/01/trungquandev-avatar-2021.jpg"
             />
           </Tooltip>
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
+          <Tooltip title="AiMier">
+            <Avatar alt="AiMier"
               src="https://trungquandev.com/wp-content/uploads/2018/04/trungquandev-avatar.jpeg"
             />
           </Tooltip>
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
+          <Tooltip title="AiMier">
+            <Avatar alt="AiMier"
               src="https://trungquandev.com/wp-content/uploads/2019/03/trungquandev-avatar-01-scaled.jpg"
             />
           </Tooltip>
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
+          <Tooltip title="AiMier">
+            <Avatar alt="AiMier"
               src="https://trungquandev.com/wp-content/uploads/2017/03/aboutme.jpg"
             />
           </Tooltip>
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
+          <Tooltip title="AiMier">
+            <Avatar alt="AiMier"
               src="https://trungquandev.com/wp-content/uploads/2019/06/trungquandev-cat-avatar.png"
             />
           </Tooltip>
 
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
+          <Tooltip title="AiMier">
+            <Avatar alt="AiMier"
               src="https://trungquandev.com/wp-content/uploads/2023/05/main-avatar-circle-min-trungquandev-codetq.jpeg"
             />
           </Tooltip>
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
+          <Tooltip title="AiMier">
+            <Avatar alt="AiMier"
               src="https://trungquandev.com/wp-content/uploads/2021/01/trungquandev-avatar-2021.jpg"
             />
           </Tooltip>
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
-              src="https://trungquandev.com/wp-content/uploads/2018/04/trungquandev-avatar.jpeg"
-            />
-          </Tooltip>
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
-              src="https://trungquandev.com/wp-content/uploads/2019/03/trungquandev-avatar-01-scaled.jpg"
-            />
-          </Tooltip>
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
-              src="https://trungquandev.com/wp-content/uploads/2017/03/aboutme.jpg"
-            />
-          </Tooltip>
-          <Tooltip title="trungquandev">
-            <Avatar alt="trungquandev"
-              src="https://trungquandev.com/wp-content/uploads/2019/06/trungquandev-cat-avatar.png"
-            />
-          </Tooltip>
+
         </AvatarGroup>
       </Box>
     </Box>

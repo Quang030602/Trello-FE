@@ -89,8 +89,8 @@ function Column({ column, createNewCard, deleteColumnDetails }) {
       // dialogProps: { maxWidth: 'lg' },
       // cancellationButtonProps: { color: 'primary' },
       // confirmationButtonProps: { color: 'success', variant: 'outlined' },
-      // description: 'Phải nhập chữ trungquandev thì mới được Confirm =))',
-      // confirmationKeyword: 'trungquandev'
+      // description: 'Phải nhập chữ AiMier thì mới được Confirm =))',
+      // confirmationKeyword: 'AiMier'
     }).then(() => {
       /**
        * Gọi lên props function deleteColumnDetails nằm ở component cha cao nhất (boards/_id.jsx)
