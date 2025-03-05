@@ -29,8 +29,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
 
 function BoardContent({
   board,
-  createNewColumn,
-  createNewCard,
+
   moveColumns,
   moveCardInTheSameColumn,
   moveCardToDifferentColumn,
@@ -365,7 +364,7 @@ function BoardContent({
     <DndContext
       // Cảm biến (đã giải thích kỹ ở video số 30)
       sensors={sensors}
-      // Thuật toán phát hiện va chạm (nếu không có nó thì card với cover lớn sẽ không kéo qua Column được vì lúc này nó đang bị conflict giữa card và column), 
+      // Thuật toán phát hiện va chạm (nếu không có nó thì card với cover lớn sẽ không kéo qua Column được vì lúc này nó đang bị conflict giữa card và column),
       // chúng ta sẽ dùng closestCorners thay vì closestCenter
       // https://docs.dndkit.com/api-documentation/context-provider/collision-detection-algorithms
       // nếu chỉ dùng closestCorners sẽ có bug flickering + sai lệch dữ liệu
@@ -386,8 +385,6 @@ function BoardContent({
       }}>
         <ListColumns
           columns={orderedColumns}
-          createNewColumn={createNewColumn}
-          createNewCard={createNewCard}
           deleteColumnDetails={deleteColumnDetails}
         />
         <DragOverlay dropAnimation={customDropAnimation}>
