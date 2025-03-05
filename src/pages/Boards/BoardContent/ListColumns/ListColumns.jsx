@@ -18,7 +18,7 @@ import { updateCurrentActiveBoard,
   selectCurrentActiveBoard }
   from '~/redux/activeBoard/activeBoardSlice'
 
-function ListColumns({ columns, deleteColumnDetails }) {
+function ListColumns({ columns }) {
   const dispatch = useDispatch()
   const board = useSelector(selectCurrentActiveBoard)
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
@@ -87,7 +87,6 @@ function ListColumns({ columns, deleteColumnDetails }) {
           <Column
             key={column._id}
             column={column}
-            deleteColumnDetails={deleteColumnDetails}
           />)}
 
         {/* Box Add new column CTA */}

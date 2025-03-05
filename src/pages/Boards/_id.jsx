@@ -3,10 +3,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { useEffect } from 'react'
-import { toast } from 'react-toastify'
 import { cloneDeep } from 'lodash'
 import {
-  deleteColumnDetailsAPI,
   moveCardToDifferentColumnAPI,
   updateBoardDetailsAPI,
   updateColumnDetailsAPI
@@ -96,20 +94,6 @@ function Board() {
     })
   }
 
-  // Xử lý xóa một Column và Cards bên trong nó
-  const deleteColumnDetails = (columnId) => {
-    // Update cho chuẩn dữ liệu state Board
-    const newBoard = { ...board }
-    newBoard.columns = newBoard.columns.filter(c => c._id !== columnId)
-    newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
-    //setBoard(newBoard)
-    dispatch(updateCurrentActiveBoard(newBoard))
-    // Gọi API xử lý phía BE
-    deleteColumnDetailsAPI(columnId).then(res => {
-      toast.success(res?.deleteResult)
-    })
-  }
-
   if (!board) {
     return (
       <Box sx={{
@@ -132,7 +116,6 @@ function Board() {
       <BoardBar board={board} />
       <BoardContent
         board={board}
-        deleteColumnDetails={deleteColumnDetails}
 
         moveColumns={moveColumns}
         moveCardInTheSameColumn={moveCardInTheSameColumn}

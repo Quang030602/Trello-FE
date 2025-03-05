@@ -23,7 +23,8 @@ import { useConfirm } from 'material-ui-confirm'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import {
-  createNewCardAPI
+  createNewCardAPI,
+  deleteColumnDetailsAPI
 } from '~/apis'
 import ListCards from './ListCards/ListCards'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,7 +34,7 @@ import {
   from '~/redux/activeBoard/activeBoardSlice'
 import { cloneDeep } from 'lodash'
 
-function Column({ column, deleteColumnDetails }) {
+function Column({ column }) {
   const dispatch = useDispatch()
   const board = useSelector(selectCurrentActiveBoard)
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
@@ -130,7 +131,16 @@ function Column({ column, deleteColumnDetails }) {
        * và lúc này chúng ta có thể gọi luôn API ở đây là xong thay vì phải lần lượt gọi ngược lên những component cha phía bên trên. (Đối với component con nằm càng sâu thì càng khổ :D)
        * - Với việc sử dụng Redux như vậy thì code sẽ Clean chuẩn chỉnh hơn rất nhiều.
        */
-      deleteColumnDetails(column._id)
+      // Update cho chuẩn dữ liệu state Board
+      const newBoard = { ...board }
+      newBoard.columns = newBoard.columns.filter(c => c._id !== column._id)
+      newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== column._id)
+      //setBoard(newBoard)
+      dispatch(updateCurrentActiveBoard(newBoard))
+      // Gọi API xử lý phía BE
+      deleteColumnDetailsAPI( column._id).then(res => {
+        toast.success(res?.deleteResult)
+      })
     }).catch(() => {})
   }
 
