@@ -17,18 +17,20 @@ import { fetchBoardDetailsAPI,
   selectCurrentActiveBoard }
   from '~/redux/activeBoard/activeBoardSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 function Board() {
   const dispatch = useDispatch()
   // const [board, setBoard] = useState(null)
   const board = useSelector(selectCurrentActiveBoard)
+  const { boardId } = useParams()
   useEffect(() => {
     // Tạm thời fix cứng boardId, flow chuẩn chỉnh về sau khi học nâng cao trực tiếp với mình là chúng ta sẽ sử dụng react-router-dom để lấy chuẩn boardId từ URL. Chi tiết hơn xem tại playlist nâng cao này: https://youtube.com/playlist?list=PLP6tw4Zpj-RJbPQfTZ0eCAXH_mHQiuf2G
-    const boardId = '67b54524fb02d348daeef05d'
+    //const boardId = '67b54524fb02d348daeef05d'
     // Call API
     dispatch(fetchBoardDetailsAPI(boardId))
 
-  }, [dispatch])
+  }, [dispatch, boardId])
   /**
    * Func này có nhiệm vụ gọi API và xử lý khi kéo thả Column xong xuôi
    * Chỉ cần gọi API để cập nhật mảng columnOrderIds của Board chứa nó (thay đổi vị trí trong board)
