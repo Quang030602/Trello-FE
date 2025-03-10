@@ -17,7 +17,7 @@ import {
   FIELD_REQUIRED_MESSAGE,
   PASSWORD_RULE_MESSAGE,
   EMAIL_RULE_MESSAGE
-} from '~/utils/validations'
+} from '~/utils/validators'
 import FieldErrorAlert from '~/components/Form/FieldErrorAlert'
 
 
@@ -46,12 +46,12 @@ function LoginForm() {
           <Box sx={{ marginTop: '1em', display: 'flex', justifyContent: 'center', flexDirection: 'column', padding: '0 1em' }}>
             <Alert severity="success" sx={{ '.MuiAlert-message': { overflow: 'hidden' } }}>
               Your email&nbsp;
-              <Typography variant="span" sx={{ fontWeight: 'bold', '&:hover': { color: '#fdba26' } }}>trungquandev@gmail.com</Typography>
+              <Typography variant="span" sx={{ fontWeight: 'bold', '&:hover': { color: '#fdba26' } }}>minhquang030602@gmail.com</Typography>
               &nbsp;has been verified.<br />Now you can login to enjoy our services! Have a good day!
             </Alert>
             <Alert severity="info" sx={{ '.MuiAlert-message': { overflow: 'hidden' } }}>
               An email has been sent to&nbsp;
-              <Typography variant="span" sx={{ fontWeight: 'bold', '&:hover': { color: '#fdba26' } }}>trungquandev@gmail.com</Typography>
+              <Typography variant="span" sx={{ fontWeight: 'bold', '&:hover': { color: '#fdba26' } }}>minhquang030602@gmail.com</Typography>
               <br />Please check and verify your account before logging in!
             </Alert>
           </Box>

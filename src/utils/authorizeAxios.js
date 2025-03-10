@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { interceptorLoadingElements } from '~/utils/formatters'
 import { toast } from 'react-toastify'
-import { handleLogoutAPI, refreshTokenAPI } from '~/apis'
+//import { handleLogoutAPI, refreshTokenAPI } from '~/apis'
 
 // khởi tạo 1 đối tưởng Axios mục đích để custom và cấu hình chung cho dự án
 let authorizedAxiosInstance = axios.create()
@@ -43,13 +43,13 @@ authorizedAxiosInstance.interceptors.response.use((response) => {
   if (error?.response?.status !== 410) {
     toast.error(errorMessage)
   }
-  if (error?.response?.status === 401) {
-    handleLogoutAPI().then(() => {
+  // if (error?.response?.status === 401) {
+  //   handleLogoutAPI().then(() => {
 
-      location.href = '/login'
-    }
-    )
-  }
+  //     location.href = '/login'
+  //   }
+  //   )
+  // }
 
   // xử lý logout
 
@@ -57,26 +57,26 @@ authorizedAxiosInstance.interceptors.response.use((response) => {
   if (error?.response?.status === 410 && !originalRequest._retry) {
     originalRequest._retry = true
 
-    if (!refreshTokenPromise) {
-      const refreshToken = localStorage.getItem('refreshToken')
-      refreshTokenPromise= refreshTokenAPI(refreshToken)
-        .then(( res ) => {
-          const { accessToken } = res.data
-          localStorage.setItem('accessToken', accessToken)
-          authorizedAxiosInstance.headers.Authorization = `Bearer ${accessToken}`
-          return authorizedAxiosInstance(originalRequest)
-        })
-        .catch(( err ) => {
-          handleLogoutAPI().then(() => {
+    // if (!refreshTokenPromise) {
+    //   const refreshToken = localStorage.getItem('refreshToken')
+    //   refreshTokenPromise= refreshTokenAPI(refreshToken)
+    //     .then(( res ) => {
+    //       const { accessToken } = res.data
+    //       localStorage.setItem('accessToken', accessToken)
+    //       authorizedAxiosInstance.headers.Authorization = `Bearer ${accessToken}`
+    //       return authorizedAxiosInstance(originalRequest)
+    //     })
+    //     .catch(( err ) => {
+    //       handleLogoutAPI().then(() => {
 
-            location.href = '/login'
-          })
-          return Promise.reject(err)
-        })
-        .finally(() => {
-          refreshTokenPromise = null
-        })
-    }
+    //         location.href = '/login'
+    //       })
+    //       return Promise.reject(err)
+    //     })
+    //     .finally(() => {
+    //       refreshTokenPromise = null
+    //     })
+    // }
     return refreshTokenPromise.then(() => {
       return authorizedAxiosInstance(originalRequest)
     })

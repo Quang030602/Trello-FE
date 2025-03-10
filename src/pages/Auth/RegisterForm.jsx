@@ -16,7 +16,7 @@ import {
   FIELD_REQUIRED_MESSAGE,
   PASSWORD_RULE_MESSAGE,
   EMAIL_RULE_MESSAGE
-} from '~/utils/validations'
+} from '~/utils/validators'
 import FieldErrorAlert from '~/components/Form/FieldErrorAlert'
 
 function RegisterForm() {

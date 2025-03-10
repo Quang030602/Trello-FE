@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 import Board from '~/pages/Boards/_id'
-import NotFound from '~/pages/NotFound'
+import NotFound from '~/pages/404/NotFound'
 import Auth from '~/pages/Auth/Auth'
 
 
