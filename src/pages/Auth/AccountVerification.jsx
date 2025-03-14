@@ -14,7 +14,6 @@ function AccountVerification() {
     if (email && token) {
       verifyUserAPI({ email, token })
         .then(() => setVerified(true))
-        .catch(() => setVerified(false))
     }
   }, [email, token])
 
