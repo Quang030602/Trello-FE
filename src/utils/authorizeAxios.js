@@ -1,8 +1,12 @@
 import axios from 'axios'
 import { interceptorLoadingElements } from '~/utils/formatters'
 import { toast } from 'react-toastify'
-//import { handleLogoutAPI, refreshTokenAPI } from '~/apis'
+import { refreshTokenAPI } from '~/apis'
+import { logoutUserAPI } from '~/redux/user/userSlice'
 
+
+let axiosReduxStore
+export const injectStore = mainStore => { axiosReduxStore = mainStore}
 // khởi tạo 1 đối tưởng Axios mục đích để custom và cấu hình chung cho dự án
 let authorizedAxiosInstance = axios.create()
 
@@ -37,48 +41,38 @@ authorizedAxiosInstance.interceptors.response.use((response) => {
 
 
   let errorMessage = error?.message
-  if (error?.response?.data?.message) {
+  if (error.response?.data?.message) {
     errorMessage = error.response.data.message
   }
-  if (error?.response?.status !== 410) {
+  if (error.response?.status !== 410) {
     toast.error(errorMessage)
   }
-  // if (error?.response?.status === 401) {
-  //   handleLogoutAPI().then(() => {
-
-  //     location.href = '/login'
-  //   }
-  //   )
-  // }
+  if (error.response?.status === 401) {
+    axiosReduxStore.dispatch(logoutUserAPI(false))
+  }
 
   // xử lý logout
 
-  const originalRequest = error.config
-  if (error?.response?.status === 410 && !originalRequest._retry) {
-    originalRequest._retry = true
+  const originalRequests = error.config
+  if (error?.response?.status === 410 && !originalRequests._retry) {
+    originalRequests._retry = true
 
-    // if (!refreshTokenPromise) {
-    //   const refreshToken = localStorage.getItem('refreshToken')
-    //   refreshTokenPromise= refreshTokenAPI(refreshToken)
-    //     .then(( res ) => {
-    //       const { accessToken } = res.data
-    //       localStorage.setItem('accessToken', accessToken)
-    //       authorizedAxiosInstance.headers.Authorization = `Bearer ${accessToken}`
-    //       return authorizedAxiosInstance(originalRequest)
-    //     })
-    //     .catch(( err ) => {
-    //       handleLogoutAPI().then(() => {
-
-    //         location.href = '/login'
-    //       })
-    //       return Promise.reject(err)
-    //     })
-    //     .finally(() => {
-    //       refreshTokenPromise = null
-    //     })
-    // }
-    return refreshTokenPromise.then(() => {
-      return authorizedAxiosInstance(originalRequest)
+    if (!refreshTokenPromise) {
+      refreshTokenPromise= refreshTokenAPI()
+        .then(( data ) => {
+          return data?.accessToken
+        })
+        .catch(( _error ) => {
+          axiosReduxStore.dispatch(logoutUserAPI(false))
+          return Promise.reject(_error)
+        })
+        .finally(() => {
+          refreshTokenPromise = null
+        })
+    }
+    // eslint-disable-next-line no-unused-vars
+    return refreshTokenPromise.then(accessToken => {
+      return authorizedAxiosInstance(originalRequests)
     })
   }
 

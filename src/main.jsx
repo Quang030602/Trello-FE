@@ -21,6 +21,9 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 const persistor = persistStore(store)
 
+//Ky thuat inject store
+import { injectStore } from '~/utils/authorizeAxios'
+injectStore(store)
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter basename='/'>
     <Provider store={store}>

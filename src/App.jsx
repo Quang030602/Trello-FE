@@ -7,7 +7,7 @@ import AccountVerification from '~/pages/Auth/AccountVerification'
 import { useSelector } from 'react-redux'
 import { selectCurrentUser } from '~/redux/user/userSlice'
 
-const ProtectedRoute = ({user}) => {
+const ProtectedRoute = ({ user }) => {
   if (!user) return <Navigate to='/login' replace={ true } />
   return <Outlet />
 }
