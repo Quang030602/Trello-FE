@@ -13,6 +13,7 @@ import Logout from '@mui/icons-material/Logout'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectCurrentUser, logoutUserAPI } from '~/redux/user/userSlice'
 import { useConfirm } from 'material-ui-confirm'
+import { Link } from 'react-router-dom'
 
 function Profiles() {
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -64,15 +65,20 @@ function Profiles() {
           'aria-labelledby': 'basic-button-profiles'
         }}
       >
-        <MenuItem sx ={{
-          '&:hover': { color :'success.light' }
+        <Link to= '/settings/account' style ={{
+          color: 'inherit',
+          textDecoration: 'none'
         }}>
-          <Avatar
-            sx={{ width: 28, height: 28, mr: 2 }}
-            alt='AiMier'
-            src={currentUser?.avatar}
-          /> Profile
-        </MenuItem>
+          <MenuItem sx ={{
+            '&:hover': { color :'success.light' }
+          }}>
+            <Avatar
+              sx={{ width: 28, height: 28, mr: 2 }}
+              alt='AiMier'
+              src={currentUser?.avatar}
+            /> Profile
+          </MenuItem>
+        </Link>
         <Divider />
         <MenuItem>
           <ListItemIcon>
@@ -80,12 +86,19 @@ function Profiles() {
           </ListItemIcon>
           Add another account
         </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
+        <Link to= '/settings/security' style ={{
+          color: 'inherit',
+          textDecoration: 'none'
+        }}>
+          <MenuItem sx ={{
+            '&:hover': { color :'success.light' }
+          }}>
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            Settings
+          </MenuItem>
+        </Link>
         <MenuItem onClick={handleLogout} sx ={{
           '&:hover': {
             color :'warning.dark',

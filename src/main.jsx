@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 // Cấu hình MUI Dialog
 import { ConfirmProvider } from 'material-ui-confirm'
+import { GlobalStyles } from '@mui/material'
 
 // Cấu hình Redux
 import { Provider } from 'react-redux'
@@ -36,6 +37,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             cancellationButtonProps: { color: 'inherit' },
             confirmationButtonProps: { color: 'secondary', variant: 'outlined' }
           }}>
+            <GlobalStyles styles={{
+              a: { textDecoration: 'none' },
+              'html, body, #root': { height: '100%' },
+              '#root': { display: 'flex', flexDirection: 'column' }
+            }}/>
             <CssBaseline />
             <App />
             <ToastContainer position="bottom-left" theme="colored" />
