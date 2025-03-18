@@ -88,6 +88,15 @@ function AccountTab() {
     }
 
     // Gọi API...
+    toast.promise(
+      dispatch(updateUserAPI(reqData)),
+      { pending: 'Updating ...' }
+    ).then(res => {
+      if (!res.error) {
+        toast.success('Update successfully!', { theme: 'colored' })
+      }
+      e.target.value = ''
+    })
   }
 
   return (
