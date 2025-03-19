@@ -18,13 +18,14 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
+//import Typography from '@mui/material/Typography'
 import { useConfirm } from 'material-ui-confirm'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import {
   createNewCardAPI,
-  deleteColumnDetailsAPI
+  deleteColumnDetailsAPI,
+  updateColumnDetailsAPI
 } from '~/apis'
 import ListCards from './ListCards/ListCards'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,6 +34,7 @@ import {
   selectCurrentActiveBoard }
   from '~/redux/activeBoard/activeBoardSlice'
 import { cloneDeep } from 'lodash'
+import ToggleFocusInput from '~/components/Form/ToggleFocusInput'
 
 function Column({ column }) {
   const dispatch = useDispatch()
@@ -144,6 +146,14 @@ function Column({ column }) {
     }).catch(() => {})
   }
 
+  const onUpdateColumnTitle = (newTitle) => {
+    updateColumnDetailsAPI(column._id, { title: newTitle }).then(() => {
+      const newBoard = cloneDeep(board)
+      const columnToUpdate = newBoard.columns.find(c => column._id === c._id)
+      if (columnToUpdate) { columnToUpdate.title = newTitle }
+      dispatch(updateCurrentActiveBoard(newBoard))
+    })
+  }
   // Phải bọc div ở đây vì vấn đề chiều cao của column khi kéo thả sẽ có bug kiểu kiểu flickering (video 32)
   return (
     <div ref={setNodeRef} style={dndKitColumnStyles} {...attributes}>
@@ -167,13 +177,18 @@ function Column({ column }) {
           alignItems: 'center',
           justifyContent: 'space-between'
         }}>
-          <Typography variant="h6" sx={{
+          {/* <Typography variant="h6" sx={{
             fontSize: '1rem',
             fontWeight: 'bold',
             cursor: 'pointer'
           }}>
             {column?.title}
-          </Typography>
+          </Typography> */}
+          < ToggleFocusInput
+            value={ column?.title }
+            onChangedValue={ onUpdateColumnTitle }
+            data-no-dnd="true"
+          />
           <Box>
             <Tooltip title="More options">
               <ExpandMoreIcon

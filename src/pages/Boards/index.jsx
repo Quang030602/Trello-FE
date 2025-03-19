@@ -63,24 +63,18 @@ function Boards() {
    */
   const page = parseInt(query.get('page') || '1', 10)
 
+  const updateStateData = (res) => {
+    setBoards(res.boards || [])
+    setTotalBoards(res.total || 0)
+  }
   useEffect(() => {
-    // Fake tạm 16 cái item thay cho boards
-    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-    // setBoards([...Array(16)].map((_, i) => i))
-    // // Fake tạm giả sử trong Database trả về có tổng 100 bản ghi boards
-    // setTotalBoards(100)
-    console.log('Fetching data for page:', page)
     // Gọi API lấy danh sách boards ở đây...
-    fetchBoardsAPI(location.search)
-      .then(res => {
-        console.log('API response:', res)
-        setBoards(res.boards || [])
-        setTotalBoards(res.total || 0)
-      })
-
+    fetchBoardsAPI(location.search).then( updateStateData )
     // ...
-  }, [location.search, page])
-
+  }, [location.search])
+  const afterCreateNewBoard = () => {
+    fetchBoardsAPI(location.search).then( updateStateData )
+  }
   // Lúc chưa tồn tại boards > đang chờ gọi api thì hiện loading
   if (!boards) {
     return <PageLoadingSpinner caption="Loading Boards..." />
@@ -108,7 +102,7 @@ function Boards() {
             </Stack>
             <Divider sx={{ my: 1 }} />
             <Stack direction="column" spacing={1}>
-              <SidebarCreateBoardModal />
+              <SidebarCreateBoardModal afterCreateNewBoard= {afterCreateNewBoard} />
             </Stack>
           </Grid>
 
