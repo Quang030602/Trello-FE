@@ -49,6 +49,7 @@ authorizedAxiosInstance.interceptors.response.use((response) => {
   }
   if (error.response?.status === 401) {
     axiosReduxStore.dispatch(logoutUserAPI(false))
+    window.location.href = '/login' // Redirect to login page
   }
 
   // xử lý logout
@@ -64,6 +65,7 @@ authorizedAxiosInstance.interceptors.response.use((response) => {
         })
         .catch(( _error ) => {
           axiosReduxStore.dispatch(logoutUserAPI(false))
+          window.location.href = '/login'// Redirect to login page
           return Promise.reject(_error)
         })
         .finally(() => {
