@@ -75,7 +75,7 @@ function Boards() {
       .then(res => {
         console.log('API response:', res)
         setBoards(res.boards || [])
-        setTotalBoards(res.totalBoards || 0)
+        setTotalBoards(res.total || 0)
       })
 
     // ...
