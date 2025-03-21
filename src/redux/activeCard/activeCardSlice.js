@@ -17,6 +17,7 @@ export const activeCardSlice = createSlice({
       state.currentActiveCard = fullCard
     }
   },
+  // eslint-disable-next-line no-unused-vars
   extraReducers: (builder) => {}
 })
 
